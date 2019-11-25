@@ -25,7 +25,6 @@ class CreateAccountViewModel{
                 self.view?.showAlert(err.localizedDescription)
             }else{
                 self.view?.navigate()
-                print("Result:", authResult ?? "")
             }
             
         }

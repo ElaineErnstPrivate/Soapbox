@@ -131,7 +131,6 @@ extension FeedViewController: UICollectionViewDelegate, UICollectionViewDataSour
                    guard let data = photoData as NSData? else{
                        print("Fails to assign data")
                        return
-
                    }
                 photo.imageData = data as Data
                    // save data to photo object

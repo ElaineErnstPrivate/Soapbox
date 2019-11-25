@@ -29,7 +29,6 @@ class FavouritesViewModel: NSObject, NSFetchedResultsControllerDelegate{
                     return
                 }
                 handler(photoData, nil)
-                print("DATA: ", photoData)
             }
         }
     }

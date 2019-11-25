@@ -50,7 +50,7 @@ class FeedViewModel:NSObject,NSFetchedResultsControllerDelegate{
                  return
              }
              handler(photoData, nil)
-             print("DATA: ", photoData)
+
             }
         }
     }
