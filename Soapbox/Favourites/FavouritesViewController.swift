@@ -17,7 +17,8 @@ class FavouritesViewController: UIViewController, FavouritesViewable {
     var viewModel : FavouritesViewModel?
     var dataModel: DataController!
 
-       
+    @IBOutlet weak var noPhotosAvailable: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -59,6 +60,9 @@ class FavouritesViewController: UIViewController, FavouritesViewable {
 extension FavouritesViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if fetchResultsController.sections?[section].numberOfObjects == 0 {
+            self.noPhotosAvailable.isHidden = false
+        }
         return fetchResultsController.sections?[section].numberOfObjects ?? 0
     }
     
@@ -132,6 +136,7 @@ extension FavouritesViewController: NSFetchedResultsControllerDelegate{
          } catch  let error {
              print("Error:",error.localizedDescription)
          }
+        
      }
     // Update objects
        func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {

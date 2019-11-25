@@ -25,8 +25,46 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate ,
             self.profilePicture.image = yourImage
 
         }
-        // Do any additional setup after loading the view.
     }
+    
+    @IBAction func logout(_ sender: Any) {
+        let alertController = UIAlertController(
+            title: "Logout",
+            message: "Logging out will erase all your data. Do you want to continue?",
+            preferredStyle: .alert)
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+
+        }
+        alertController.addAction(cancelAction)
+
+        let logoutAction = UIAlertAction(title: "Logout", style: .default) { (_) in
+                self.userDefaults.removeObject(forKey: "email")
+                self.userDefaults.removeObject(forKey: "Profile")
+                self.userDefaults.set(true, forKey: "isLoggedOut")
+                self.navigate()
+        }
+        
+        alertController.addAction(logoutAction)
+        self.present(alertController, animated: true, completion: nil)
+
+    }
+    
+    
+    func navigate() {
+         guard let keyWindow = UIApplication.shared.connectedScenes
+          .filter({$0.activationState == .foregroundActive})
+          .map({$0 as? UIWindowScene})
+          .compactMap({$0})
+          .first?.windows
+          .filter({$0.isKeyWindow}).first,
+          let controller = storyboard?.instantiateInitialViewController() else{
+              return
+          }
+          
+        keyWindow.rootViewController = controller
+      }
+            
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource{
@@ -44,6 +82,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource{
         
         return cell
     }
+    
     func presentImagePickerWith(sourceType: UIImagePickerController.SourceType) {
           let imagePicker = UIImagePickerController()
           imagePicker.delegate = self

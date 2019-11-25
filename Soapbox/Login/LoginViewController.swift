@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 import Firebase
-class LoginViewController: UIViewController , LoginViewable{
+class LoginViewController: UIViewController , LoginViewable, UITextFieldDelegate{
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextFiels: UITextField!
@@ -24,9 +24,14 @@ class LoginViewController: UIViewController , LoginViewable{
         // Do any additional setup after loading the view.
         dataModel.load()
         viewModel = LoginViewModel(viewable: self)
-        viewModel?.checkAuthStatus()
-        
-
+        let userdefaults = UserDefaults.standard
+        if !userdefaults.bool(forKey: "isLoggedOut"){
+          viewModel?.checkAuthStatus()
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
     
     @IBAction func createNewAccount(_ sender: Any) {
@@ -48,6 +53,7 @@ class LoginViewController: UIViewController , LoginViewable{
             let controller = storyboard?.instantiateViewController(identifier: "FeedViewController") as? FeedTabBarControllerViewController else {
             return
         }
+        
         controller.dataModel = dataModel
         window.rootViewController = controller
     }

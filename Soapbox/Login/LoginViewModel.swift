@@ -14,7 +14,8 @@ class LoginViewModel {
     private weak var view: LoginViewable?
     var email: String?
     var password: String?
-    
+    let userDefaults = UserDefaults.standard
+
     public init(viewable:LoginViewable){
         self.view = viewable
     }
@@ -27,6 +28,7 @@ class LoginViewModel {
                 self.view?.showAlert(err.localizedDescription)
             }
             else{
+                self.userDefaults.set(false, forKey: "isLoggedOut")
                 self.view?.navigate()
             }
         }
@@ -37,8 +39,7 @@ class LoginViewModel {
         Auth.auth().addStateDidChangeListener({ (auth:Auth, user:User?) in
             self.view?.hideAnimation()
             if user != nil {
-                let userDefaults = UserDefaults.standard
-                userDefaults.set(user?.email, forKey: "Email")
+                self.userDefaults.set(user?.email, forKey: "Email")
                 self.view?.navigate()
             }else{
                 print("You need to sign up or login first")

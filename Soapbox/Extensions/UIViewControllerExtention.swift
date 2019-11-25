@@ -12,6 +12,7 @@ import UIKit
 extension UIViewController {
     typealias AlertHandler = () -> Void
     
+   
     func displayAlert(title: String = "",
                       buttonText: String = "OK",
                       message: String,
